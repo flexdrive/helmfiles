@@ -36,12 +36,10 @@ releases:
   hooks:
     # This hoook adds the CRDs
     - events: ["presync"]
-      showlogs: true
       command: "/bin/sh"
       args: ["-c", "kubectl apply -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.9/deploy/manifests/00-crds.yaml"]
     # This hook adds the annotation that keeps the webhook from preventing its own installation
     - events: ["presync"]
-      showlogs: true
       command: "/bin/sh"
       args:
       - "-c"
