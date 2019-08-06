@@ -65,6 +65,13 @@ releases:
         # defaultIssuerKind: ""
         # defaultACMEChallengeType: ""
         # defaultACMEDNS01ChallengeProvider: ""
+      nodeSelector:
+        node-role.flexdrive.io: ops
+      tolerations:
+      - key: node-role.flexdrive.io
+        operator: Equal
+        value: ops
+        effect: NoSchedule
 {{ if env "CERT_MANAGER_IAM_ROLE" | default "" }}
       podAnnotations:
         ### Required: EXTERNAL_DNS_IAM_ROLE; e.g. cp-staging-external-dns
@@ -124,9 +131,7 @@ releases:
             name: letsencrypt-staging
           solvers:
             # Enable the HTTP-01 challenge provider
-            - http01:
-                ingress:
-                  class: nginx
+            - http01: {}
 {{- if env "CERT_MANAGER_IAM_ROLE" | default "" }}
             # Enable the DNS-01 challenge provider
             - dns01:
@@ -147,9 +152,7 @@ releases:
             name: letsencrypt-prod
           solvers:
             # Enable the HTTP-01 challenge provider
-            - http01:
-                ingress:
-                  class: nginx
+            - http01: {}
 {{- if env "CERT_MANAGER_IAM_ROLE" | default "" }}
             # Enable the DNS-01 challenge provider
             - dns01:
